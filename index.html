@@ -1,0 +1,124 @@
+﻿<!doctype html>
+<html lang="ko" data-theme="industrial">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>PipeMark Studio — 배관 · 안전표지 · 설비 라벨 제작기</title>
+  <meta name="description" content="배관 마커부터 위험·경고·금지·보호구·설비·비상·물류 표지까지 규격과 디자인을 선택해 인쇄하는 로컬 우선 산업 라벨 제작기입니다.">
+  <meta name="theme-color" content="#163b57">
+  <link rel="canonical" href="https://ko9ma7.github.io/pipemark-studio/">
+  <meta property="og:type" content="website"><meta property="og:title" content="PipeMark Studio"><meta property="og:description" content="배관·안전·설비 표지를 선택하고 세부조정한 뒤 실제 mm 크기로 인쇄하세요."><meta property="og:url" content="https://ko9ma7.github.io/pipemark-studio/"><meta property="og:image" content="https://ko9ma7.github.io/pipemark-studio/assets/og-image.png"><meta property="og:site_name" content="PipeMark Studio">
+  <meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="PipeMark Studio"><meta name="twitter:description" content="배관·안전·설비 라벨을 로컬에서 설계하고 인쇄하세요."><meta name="twitter:image" content="https://ko9ma7.github.io/pipemark-studio/assets/og-image.png">
+  <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml"><link rel="icon" href="./assets/favicon-32.png" sizes="32x32" type="image/png"><link rel="apple-touch-icon" href="./assets/apple-touch-icon.png"><link rel="manifest" href="./manifest.webmanifest"><link rel="stylesheet" href="./style.css">
+  <style id="print-style">@page{size:A4 portrait;margin:8mm}</style>
+</head>
+<body>
+  <svg class="sprite" aria-hidden="true">
+    <symbol id="i-logo" viewBox="0 0 24 24"><path d="M3 8h13a4 4 0 0 1 0 8H3"/><path d="M7 5v14M17 5v14"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></symbol>
+    <symbol id="i-save" viewBox="0 0 24 24"><path d="M4 4h13l3 3v13H4z"/><path d="M8 4v6h8V4M8 20v-6h8v6"/></symbol>
+    <symbol id="i-folder" viewBox="0 0 24 24"><path d="M3 6h7l2 2h9v11H3z"/></symbol>
+    <symbol id="i-down" viewBox="0 0 24 24"><path d="M12 3v12M7 10l5 5 5-5M4 20h16"/></symbol>
+    <symbol id="i-up" viewBox="0 0 24 24"><path d="M12 16V4M7 9l5-5 5 5M4 20h16"/></symbol>
+    <symbol id="i-print" viewBox="0 0 24 24"><path d="M6 9V3h12v6M6 18H4V10h16v8h-2M7 14h10v7H7z"/></symbol>
+    <symbol id="i-palette" viewBox="0 0 24 24"><path d="M12 3a9 9 0 1 0 0 18h1.5a1.5 1.5 0 0 0 0-3H12a2 2 0 0 1 0-4h3a6 6 0 0 0 0-12z"/><circle cx="7" cy="10" r="1"/><circle cx="10" cy="6.5" r="1"/><circle cx="14" cy="6.5" r="1"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+    <symbol id="i-edit" viewBox="0 0 24 24"><path d="M4 20l4-1 11-11-3-3L5 16zM14 7l3 3"/></symbol>
+    <symbol id="i-copy" viewBox="0 0 24 24"><rect x="8" y="8" width="11" height="11" rx="2"/><path d="M16 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h3"/></symbol>
+    <symbol id="i-trash" viewBox="0 0 24 24"><path d="M4 7h16M9 3h6l1 4H8zM7 7l1 14h8l1-14M10 11v6M14 11v6"/></symbol>
+    <symbol id="i-reset" viewBox="0 0 24 24"><path d="M4 7v5h5M5 11a8 8 0 1 1 2 7"/></symbol>
+    <symbol id="i-chevron" viewBox="0 0 24 24"><path d="m7 9 5 5 5-5"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></symbol>
+    <symbol id="i-sliders" viewBox="0 0 24 24"><path d="M4 6h10M18 6h2M4 12h3M11 12h9M4 18h8M16 18h4"/><circle cx="16" cy="6" r="2"/><circle cx="9" cy="12" r="2"/><circle cx="14" cy="18" r="2"/></symbol>
+  </svg>
+
+  <header class="topbar noprint">
+    <div class="brand"><span class="brand-mark"><svg><use href="#i-logo"></use></svg></span><div><strong>PipeMark Studio</strong><span>배관 · 안전표지 · 설비 라벨 스튜디오</span></div></div>
+    <div class="project-box"><input id="project-name" value="기본 현장" aria-label="프로젝트 이름"><span class="saved-dot"><i></i> 이 PC 자동 저장</span></div>
+    <div class="top-actions">
+      <button id="btn-theme" class="icon-btn with-label" type="button"><svg><use href="#i-palette"></use></svg><span>화면 디자인</span></button>
+      <button id="btn-save-project" class="icon-btn" type="button" title="현장 저장"><svg><use href="#i-save"></use></svg></button>
+      <button id="btn-projects" class="icon-btn" type="button" title="현장 목록"><svg><use href="#i-folder"></use></svg></button>
+      <button id="btn-export" class="icon-btn" type="button" title="JSON 백업"><svg><use href="#i-down"></use></svg></button>
+      <button id="btn-import" class="icon-btn" type="button" title="JSON 복원"><svg><use href="#i-up"></use></svg></button><input id="file-import" type="file" accept=".json,application/json" hidden>
+      <button id="btn-print" class="primary-btn" type="button"><svg><use href="#i-print"></use></svg>인쇄 / PDF</button>
+    </div>
+  </header>
+
+  <main class="studio noprint-shell">
+    <aside class="library-panel noprint" aria-label="라벨 라이브러리">
+      <div class="panel-head"><div><span class="kicker">LABEL LIBRARY</span><h1>필요한 표지를 먼저 고르세요.</h1><p>배관뿐 아니라 안전·금지·점검·비상 표지까지 같은 방식으로 편집합니다.</p></div></div>
+      <label class="search-field"><svg><use href="#i-search"></use></svg><input id="template-search" type="search" placeholder="손 끼임, 감전, 소화기, 냉각수…"></label>
+      <div id="category-tabs" class="category-tabs" role="tablist" aria-label="라벨 분류"></div>
+      <div class="library-toolbar"><strong id="library-title">배관 · 유체</strong><span id="library-count"></span></div>
+      <div id="template-grid" class="template-grid"></div>
+    </aside>
+
+    <section id="editor-panel" class="editor-panel noprint" aria-label="현재 라벨 편집">
+      <div class="editor-head">
+        <div><span class="kicker">CURRENT LABEL</span><h2 id="editor-title">용수 배관</h2><p id="editor-hint">선택한 템플릿을 기준으로 바로 조정합니다.</p></div>
+        <button id="btn-reset-current" class="subtle-btn" type="button"><svg><use href="#i-reset"></use></svg>초기화</button>
+      </div>
+      <div id="edit-mode-banner" class="edit-banner" hidden><div><strong>목록 항목 수정 중</strong><span id="edit-mode-text"></span></div><button id="btn-cancel-edit" type="button">수정 취소</button></div>
+
+      <section class="editor-card basic-card">
+        <div class="card-title"><div><span class="step">01</span><div><strong>기본 내용</strong><span>추가 전에 여기서 바로 바꿉니다.</span></div></div></div>
+        <label class="field"><span>큰 문구</span><input id="label-text" type="text" maxlength="80"></label>
+        <label class="field"><span>보조 문구</span><input id="label-subtext" type="text" maxlength="100"></label>
+        <div class="field-row"><label class="field"><span>수량</span><input id="quantity" type="number" min="1" max="999" value="1"></label><label class="field"><span>아이콘 위치</span><select id="icon-position"><option value="left">왼쪽</option><option value="top">위쪽</option><option value="none">아이콘 없음</option></select></label></div>
+      </section>
+
+      <section id="pipe-basic" class="editor-card">
+        <div class="card-title"><div><span class="step">02</span><div><strong>배관 · 부착 기준</strong><span>규격을 고르면 권장 치수를 자동 계산합니다.</span></div></div></div>
+        <label class="field"><span>제품군</span><select id="product-family"></select></label>
+        <label class="field"><span>규격</span><select id="product-spec"></select></label>
+        <div id="pipe-geometry" class="info-strip"></div>
+        <div class="choice-label">유체 / 용도</div><div id="purpose-chips" class="choice-chips scrollable"></div>
+        <div class="choice-label">덮음 방식</div><div id="coverage-chips" class="choice-chips"></div>
+      </section>
+
+      <section id="sign-basic" class="editor-card" hidden>
+        <div class="card-title"><div><span class="step">02</span><div><strong>표지 기본 규격</strong><span>자주 쓰는 크기를 고른 뒤 세부치수에서 조정할 수 있습니다.</span></div></div></div>
+        <div id="size-presets" class="choice-chips size-chips"></div>
+        <div class="field-row"><label class="field"><span>신호어</span><input id="signal-word" type="text" maxlength="24" placeholder="예: 위험 / WARNING"></label><label class="field"><span>톤</span><select id="tone-select"></select></label></div>
+      </section>
+
+      <section class="editor-card design-card">
+        <div class="card-title"><div><span class="step">03</span><div><strong>디자인</strong><span>이름이 아니라 실제 모양을 보고 선택하세요.</span></div></div><button id="btn-design-all" type="button" class="text-btn">전체 보기</button></div>
+        <div id="layout-strip" class="layout-strip"></div>
+      </section>
+
+      <details class="advanced-block" open>
+        <summary><span><svg><use href="#i-sliders"></use></svg><strong>세부 설정</strong><small>현재 기본값을 조금씩 조정</small></span><svg class="chev"><use href="#i-chevron"></use></svg></summary>
+        <div class="advanced-content">
+          <div class="advanced-group"><div class="group-head"><strong>치수</strong><label class="switch"><input id="auto-size" type="checkbox" checked><span>자동</span></label></div><div class="field-row"><label class="field"><span>가로 W (mm)</span><input id="label-width" type="number" min="20" step="1"></label><label class="field"><span>세로 H (mm)</span><input id="label-height" type="number" min="10" step="1"></label></div><div id="geometry-fields" class="field-row"></div></div>
+          <div class="advanced-group" id="arrow-group"><div class="group-head"><strong>화살표 / 흐름</strong><span>기존 기본 화살표 포함</span></div><div class="field-row"><label class="field"><span>화살표</span><select id="arrow-style"><option value="standard">기본 화살표</option><option value="pointer">포인터</option><option value="ribbon">리본</option><option value="chevron">쉐브론</option><option value="none">없음</option></select></label><label class="field"><span>방향</span><select id="direction"><option value="right">오른쪽 →</option><option value="left">← 왼쪽</option><option value="both">← 양방향 →</option><option value="none">없음</option></select></label></div></div>
+          <div class="advanced-group"><div class="group-head"><strong>색상 · 선</strong><button id="btn-color-reset" class="text-btn" type="button">추천색 복원</button></div><div class="color-fields"><label><span>바탕</span><input id="fill-color" type="color"></label><label><span>강조</span><input id="accent-color" type="color"></label><label><span>글자</span><input id="text-color" type="color"></label></div><div class="field-row"><label class="field"><span>테두리 (mm)</span><input id="border-width" type="number" min="0" max="6" step="0.25"></label><label class="check-field"><input id="border-enabled" type="checkbox" checked><span>테두리 사용</span></label></div></div>
+          <div class="advanced-group"><div class="group-head"><strong>아이콘 / SVG</strong><button id="btn-svg-add" class="text-btn" type="button">+ SVG 추가</button></div><div id="icon-grid" class="icon-grid"></div></div>
+          <div class="advanced-group"><div class="group-head"><strong>표기 구성</strong></div><div class="field-row"><label class="field"><span>글자 정렬</span><select id="text-align"><option value="center">가운데</option><option value="left">왼쪽</option></select></label><label class="field"><span>반복 표기</span><select id="repeat-count"><option value="auto">자동</option><option value="1">1회</option><option value="2">2회</option><option value="3">3회</option><option value="4">4회</option><option value="5">5회</option></select></label></div><label class="check-field"><input id="show-spec" type="checkbox"><span>배관 규격 함께 표시</span></label></div>
+        </div>
+      </details>
+
+      <div class="editor-actions"><button id="btn-duplicate-current" class="secondary-btn" type="button"><svg><use href="#i-copy"></use></svg>사본 만들기</button><button id="btn-add" class="primary-btn grow" type="button"><svg><use href="#i-plus"></use></svg><span id="btn-add-text">출력 목록에 추가</span></button></div>
+    </section>
+
+    <section class="workspace-panel">
+      <div class="workspace-toolbar noprint"><div class="preview-tabs"><button class="active" data-preview-tab="live" type="button">현재 라벨</button><button data-preview-tab="sheet" type="button">출력 용지</button></div><div class="sheet-controls"><label>용지<select id="paper-size"><option>A4</option><option>A3</option></select></label><label>방향<select id="paper-orientation"><option value="portrait">세로</option><option value="landscape">가로</option></select></label><label>배율<select id="preview-zoom"><option value="0.6">60%</option><option value="0.8">80%</option><option value="1" selected>100%</option><option value="1.2">120%</option></select></label></div></div>
+      <div id="live-workspace" class="live-workspace">
+        <div class="live-stage"><div class="stage-label"><strong>LIVE PREVIEW</strong><span id="dimension-readout"></span></div><div id="live-preview" class="live-preview"></div><div class="ruler-note">실제 출력 크기는 mm 기준 · 화면 배율과 무관</div></div>
+        <section class="queue-panel noprint"><div class="queue-head"><div><span class="kicker">PRINT QUEUE</span><h3>출력 목록 <b id="queue-count">0</b></h3></div><div><button id="btn-clear-queue" class="text-btn danger" type="button">전체 삭제</button></div></div><div id="queue-list" class="queue-list"></div><div id="queue-empty" class="queue-empty"><strong>아직 추가된 라벨이 없습니다.</strong><span>왼쪽에서 표지를 고르고 세부 설정 후 목록에 추가하세요.</span></div></section>
+      </div>
+      <div id="sheet-workspace" class="sheet-workspace" hidden><div class="paper-scroll"><div id="print-area" class="paper A4 portrait"></div></div></div>
+    </section>
+  </main>
+
+  <dialog id="design-dialog" class="modal noprint"><div class="modal-card wide"><div class="modal-head"><div><span class="kicker">DESIGN GALLERY</span><h2>라벨 디자인 전체 보기</h2><p>현재 내용과 색상으로 실제 모양을 비교합니다.</p></div><button class="icon-btn" data-close-dialog="design-dialog" type="button"><svg><use href="#i-close"></use></svg></button></div><div id="layout-gallery" class="layout-gallery"></div></div></dialog>
+  <dialog id="theme-dialog" class="modal noprint"><div class="modal-card"><div class="modal-head"><div><span class="kicker">WORKSPACE THEME</span><h2>화면 디자인</h2></div><button class="icon-btn" data-close-dialog="theme-dialog" type="button"><svg><use href="#i-close"></use></svg></button></div><div id="theme-grid" class="theme-grid"></div></div></dialog>
+  <dialog id="project-dialog" class="modal noprint"><div class="modal-card"><div class="modal-head"><div><span class="kicker">LOCAL PROJECTS</span><h2>현장별 저장</h2></div><button class="icon-btn" data-close-dialog="project-dialog" type="button"><svg><use href="#i-close"></use></svg></button></div><div class="save-row"><input id="project-save-name" placeholder="예: 2공장 안전표지"><button id="btn-project-save-as" class="primary-btn" type="button">현재 상태 저장</button></div><div id="project-list" class="project-list"></div></div></dialog>
+  <dialog id="svg-dialog" class="modal noprint"><div class="modal-card"><div class="modal-head"><div><span class="kicker">CUSTOM SVG</span><h2>SVG 아이콘 추가</h2><p>배관뿐 아니라 안전 픽토그램도 직접 추가할 수 있습니다.</p></div><button class="icon-btn" data-close-dialog="svg-dialog" type="button"><svg><use href="#i-close"></use></svg></button></div><label class="field"><span>아이콘 이름</span><input id="custom-icon-name" placeholder="예: 프레스 손끼임"></label><label class="file-drop"><input id="custom-icon-file" type="file" accept=".svg,image/svg+xml"><strong>SVG 파일 선택</strong><span>Koboyo 등에서 받은 SVG도 사용할 수 있습니다.</span></label><div id="custom-icon-preview" class="custom-icon-preview">미리보기</div><button id="btn-save-icon" class="primary-btn full" type="button" disabled>아이콘 저장</button></div></dialog>
+
+  <div id="toast-region" class="toast-region" aria-live="polite"></div>
+  <script src="./data/catalog.js"></script><script src="./app.js"></script>
+</body>
+</html>
+

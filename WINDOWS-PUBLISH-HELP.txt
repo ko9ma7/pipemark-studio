@@ -1,0 +1,17 @@
+PipeMark Studio - Windows GitHub Publish
+
+1. Extract the ZIP completely before running anything.
+2. Open the extracted project folder.
+3. Double-click github-bootstrap.cmd.
+4. If GitHub login is required, complete the browser login and return to the CMD window.
+5. Enter a repository name or press Enter to use pipemark-studio.
+6. The CMD window will stay open on success or failure.
+7. If publishing fails, open github-bootstrap.log in the same folder.
+
+Required tools:
+- Git for Windows: https://git-scm.com/
+- GitHub CLI: https://cli.github.com/
+
+Manual fallback:
+Open PowerShell in this folder and run:
+  powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\github-publish.ps1
