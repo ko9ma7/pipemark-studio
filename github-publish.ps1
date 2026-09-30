@@ -141,7 +141,7 @@ try {
     & git diff --cached --quiet
     $DiffCode = $LASTEXITCODE
     if ($DiffCode -eq 1) {
-        & git commit -m 'feat: publish PipeMark Studio'
+        & git commit -m 'feat: publish PipeMark Studio v4.0.1'
         if ($LASTEXITCODE -ne 0) { Stop-WithError 'git commit failed.' }
         Write-Ok 'Commit created'
     } elseif ($DiffCode -eq 0) {
@@ -166,17 +166,76 @@ try {
         $Answer = Read-Host 'Push this project to the existing repository? (Y/N)'
         if ($Answer -notmatch '^[Yy]') { Stop-WithError 'Publishing was cancelled by the user.' }
 
-        $Origin = (& git remote get-url origin 2>$null)
-        if ([string]::IsNullOrWhiteSpace($Origin)) {
+        # Do not call `git remote get-url origin` until we know that origin exists.
+        # On Windows PowerShell, Git's "No such remote" stderr can become a terminating
+        # NativeCommandError when ErrorActionPreference is Stop.
+        $RemoteNames = @(& git remote)
+        if ($LASTEXITCODE -ne 0) { Stop-WithError 'Could not read Git remotes.' }
+
+        if ($RemoteNames -notcontains 'origin') {
+            Write-Step 'Adding missing Git remote: origin'
             & git remote add origin "https://github.com/$FullRepo.git"
             if ($LASTEXITCODE -ne 0) { Stop-WithError 'Could not add Git remote origin.' }
-        } elseif ($Origin -notmatch [regex]::Escape($FullRepo)) {
-            Write-Warn "Current origin: $Origin"
-            $ChangeOrigin = Read-Host "Replace origin with https://github.com/$FullRepo.git ? (Y/N)"
-            if ($ChangeOrigin -notmatch '^[Yy]') { Stop-WithError 'Publishing stopped because origin points to another repository.' }
-            & git remote set-url origin "https://github.com/$FullRepo.git"
-            if ($LASTEXITCODE -ne 0) { Stop-WithError 'Could not update Git remote origin.' }
+            Write-Ok "origin added: https://github.com/$FullRepo.git"
+        } else {
+            $Origin = ((& git remote get-url origin) | Out-String).Trim()
+            if ($LASTEXITCODE -ne 0) { Stop-WithError 'Could not read Git remote origin.' }
+            if ($Origin -notmatch [regex]::Escape($FullRepo)) {
+                Write-Warn "Current origin: $Origin"
+                $ChangeOrigin = Read-Host "Replace origin with https://github.com/$FullRepo.git ? (Y/N)"
+                if ($ChangeOrigin -notmatch '^[Yy]') { Stop-WithError 'Publishing stopped because origin points to another repository.' }
+                & git remote set-url origin "https://github.com/$FullRepo.git"
+                if ($LASTEXITCODE -ne 0) { Stop-WithError 'Could not update Git remote origin.' }
+                Write-Ok 'origin URL updated'
+            }
         }
+
+        Write-Step 'Connecting this project folder to the existing main branch'
+        $FetchCode = Invoke-Probe { & git fetch origin main }
+        if ($FetchCode -eq 0) {
+            $BaseCode = Invoke-Probe { & git merge-base HEAD origin/main }
+            if ($BaseCode -ne 0) {
+                Write-Warn 'The extracted folder has a new local Git history. Re-attaching its files on top of the existing GitHub history.'
+                & git reset --soft origin/main
+                if ($LASTEXITCODE -ne 0) { Stop-WithError 'Could not attach the local files to the existing remote history.' }
+                & git add -A
+                if ($LASTEXITCODE -ne 0) { Stop-WithError 'Could not stage the project after attaching remote history.' }
+                & git diff --cached --quiet
+                if ($LASTEXITCODE -eq 1) {
+                    & git commit -m 'feat: update PipeMark Studio v4'
+                    if ($LASTEXITCODE -ne 0) { Stop-WithError 'Could not create the update commit.' }
+                    Write-Ok 'Update commit created on top of the existing GitHub history'
+                }
+            } else {
+                Write-Ok 'Local and remote Git histories are already related'
+                $AncestorCode = Invoke-Probe { & git merge-base --is-ancestor origin/main HEAD }
+                if ($AncestorCode -ne 0) {
+                    Write-Step 'Rebasing local update on the latest origin/main'
+                    & git rebase origin/main
+                    if ($LASTEXITCODE -ne 0) { Stop-WithError 'Rebase failed. Run git rebase --abort, review the conflict, then publish again.' }
+                    Write-Ok 'Local update rebased on origin/main'
+                }
+            }
+        } else {
+            Write-Warn 'Could not fetch origin/main. The repository may be empty; continuing with the local commit.'
+        }
+    }
+
+    Write-Step 'Updating GitHub repository details'
+    $RepoDescription = 'Local-first industrial label maker for pipe markers, safety signs, equipment labels and printable SVG layouts.'
+    & gh api --method PATCH "repos/$FullRepo" -f description=$RepoDescription -f homepage=$SiteUrl -F has_issues=true -F has_projects=false -F has_wiki=false | Out-Null
+    if ($LASTEXITCODE -ne 0) {
+        Write-Warn 'Repository description/homepage could not be updated automatically.'
+    } else {
+        Write-Ok 'Description and Website were added to Repository details'
+    }
+
+    $TopicJson = @{ names = @('github-pages','label-maker','svg','pipe-markers','safety-signs','industrial','local-first','print-tools') } | ConvertTo-Json -Compress
+    $TopicJson | & gh api --method PUT "repos/$FullRepo/topics" --input - | Out-Null
+    if ($LASTEXITCODE -ne 0) {
+        Write-Warn 'Repository topics could not be updated automatically.'
+    } else {
+        Write-Ok 'Repository topics were added'
     }
 
     Write-Step 'Pushing main branch to GitHub'

@@ -1,151 +1,172 @@
-window.PM_CATALOG = {
-  version: 3,
-  productFamilies: [
-    {id:'pvc-vp',name:'PVC VP 관',short:'PVC VP',geometry:'round',standard:'JIS K 6741 계열 참고',items:[['13',18],['16',22],['20',26],['25',32],['30',38],['40',48],['50',60],['65',76],['75',89],['100',114],['125',140],['150',165],['200',216],['250',267],['300',318]].map(([n,od])=>({id:`VP-${n}`,label:`VP ${n}`,od}))},
-    {id:'pvc-vu',name:'PVC VU 관',short:'PVC VU',geometry:'round',standard:'JIS K 6741 계열 참고',items:[['40',48],['50',60],['65',76],['75',89],['100',114],['125',140],['150',165],['200',216],['250',267],['300',318]].map(([n,od])=>({id:`VU-${n}`,label:`VU ${n}`,od}))},
-    {id:'steel-sgp',name:'강관 SGP',short:'강관 SGP',geometry:'round',standard:'JIS G 3452 계열 참고',items:[['15A',21.7],['20A',27.2],['25A',34.0],['32A',42.7],['40A',48.6],['50A',60.5],['65A',76.3],['80A',89.1],['90A',101.6],['100A',114.3],['125A',139.8],['150A',165.2],['200A',216.3],['250A',267.4],['300A',318.5]].map(([n,od])=>({id:`SGP-${n}`,label:`SGP ${n}`,od}))},
-    {id:'sus-pipe',name:'SUS 파이프',short:'SUS',geometry:'round',standard:'현장 일반 규격 예시 · 수정 가능',items:[['15A',21.7],['20A',27.2],['25A',34.0],['32A',42.7],['40A',48.6],['50A',60.5],['65A',76.3],['80A',89.1],['100A',114.3],['125A',139.8],['150A',165.2]].map(([n,od])=>({id:`SUS-${n}`,label:`SUS ${n}`,od}))},
-    {id:'square-tube',name:'정사각 구조각관',short:'정사각관',geometry:'rect',standard:'현장 일반 규격 예시',items:[20,25,30,40,50,60,75,80,100,125,150].map(a=>({id:`SQ-${a}`,label:`${a} × ${a} mm`,a,b:a}))},
-    {id:'rect-tube',name:'직사각 구조각관',short:'직사각관',geometry:'rect',standard:'현장 일반 규격 예시',items:[[30,20],[40,20],[40,25],[50,25],[50,30],[60,30],[75,45],[80,40],[100,50],[100,75],[125,75],[150,100],[200,100]].map(([a,b])=>({id:`RT-${a}x${b}`,label:`${a} × ${b} mm`,a,b}))},
-    {id:'angle',name:'L형 앵글',short:'L 앵글',geometry:'angle',standard:'현장 일반 규격 예시',items:[20,25,30,40,50,65,75,90,100].map(a=>({id:`AN-${a}`,label:`L ${a} × ${a} mm`,a,b:a}))},
-    {id:'custom-round',name:'원형 직접 입력',short:'원형 직접',geometry:'round',standard:'사용자 입력',items:[{id:'CUSTOM-ROUND',label:'외경 직접 입력',od:26,custom:true}]},
-    {id:'custom-flat',name:'평면 직접 입력',short:'평면 직접',geometry:'flat',standard:'사용자 입력',items:[{id:'CUSTOM-FLAT',label:'면 크기 직접 입력',a:100,b:50,custom:true}]}
-  ],
-  pipePurposes: [
-    {id:'water',label:'일반 용수',fill:'#168A5B',stroke:'#0B5137',text:'#FFFFFF',icon:'droplet',defaultText:'용수 WATER'},
-    {id:'potable',label:'상수 / 음용수',fill:'#1A73E8',stroke:'#0B3F88',text:'#FFFFFF',icon:'droplet',defaultText:'상수 POTABLE WATER'},
-    {id:'cooling',label:'냉각수',fill:'#078E9B',stroke:'#045560',text:'#FFFFFF',icon:'snow',defaultText:'냉각수 COOLING WATER'},
-    {id:'chilled',label:'냉수 / CHW',fill:'#0B78C8',stroke:'#06446E',text:'#FFFFFF',icon:'snow',defaultText:'CHILLED WATER'},
-    {id:'air',label:'압축공기',fill:'#2E6FD0',stroke:'#173D78',text:'#FFFFFF',icon:'wind',defaultText:'압축공기 AIR'},
-    {id:'steam',label:'스팀 / 증기',fill:'#C93636',stroke:'#721818',text:'#FFFFFF',icon:'steam',defaultText:'STEAM'},
-    {id:'hotwater',label:'온수 / 급탕',fill:'#D75A3A',stroke:'#7A2C1D',text:'#FFFFFF',icon:'hot',defaultText:'온수 HOT WATER'},
-    {id:'gas',label:'가스',fill:'#F5C542',stroke:'#624A00',text:'#171717',icon:'flame',defaultText:'GAS'},
-    {id:'fire',label:'소방',fill:'#D92532',stroke:'#7B1018',text:'#FFFFFF',icon:'extinguisher',defaultText:'FIRE WATER'},
-    {id:'chemical',label:'화학물질',fill:'#F07A22',stroke:'#7A3300',text:'#151515',icon:'flask',defaultText:'CHEMICAL'},
-    {id:'acid',label:'산 / 알칼리',fill:'#7C4DD4',stroke:'#43217F',text:'#FFFFFF',icon:'flask',defaultText:'ACID / ALKALI'},
-    {id:'waste',label:'폐수 / 배수',fill:'#263238',stroke:'#000000',text:'#FFFFFF',icon:'waste',defaultText:'WASTE WATER'},
-    {id:'oil',label:'오일 / 윤활유',fill:'#7B5338',stroke:'#432B1C',text:'#FFFFFF',icon:'droplet',defaultText:'OIL'},
-    {id:'nitrogen',label:'질소 N₂',fill:'#B19CE5',stroke:'#56408D',text:'#161616',icon:'wind',defaultText:'NITROGEN N₂'},
-    {id:'oxygen',label:'산소 O₂',fill:'#7BCB68',stroke:'#356A2B',text:'#10200D',icon:'wind',defaultText:'OXYGEN O₂'},
-    {id:'vacuum',label:'진공',fill:'#F2F4F7',stroke:'#27313A',text:'#15191D',icon:'gauge',defaultText:'VACUUM'},
-    {id:'condensate',label:'응축수',fill:'#9AC6D7',stroke:'#3C6777',text:'#10242C',icon:'droplet',defaultText:'CONDENSATE'},
-    {id:'drain',label:'드레인',fill:'#65747B',stroke:'#2A3438',text:'#FFFFFF',icon:'waste',defaultText:'DRAIN'},
-    {id:'electrical',label:'전기 / 케이블',fill:'#F1F3F5',stroke:'#3D4650',text:'#111827',icon:'bolt',defaultText:'ELECTRICAL'},
-    {id:'custom',label:'사용자 지정',fill:'#F8FAFC',stroke:'#334155',text:'#0F172A',icon:'tag',defaultText:'CUSTOM'}
-  ],
-  categories: [
-    {id:'pipe',label:'배관 · 유체',icon:'pipe'},
-    {id:'warning',label:'위험 · 경고',icon:'warning'},
-    {id:'prohibition',label:'금지',icon:'prohibition'},
-    {id:'mandatory',label:'보호구 · 지시',icon:'mandatory'},
-    {id:'equipment',label:'설비 · 점검',icon:'gear'},
-    {id:'emergency',label:'비상 · 소방',icon:'cross'},
-    {id:'logistics',label:'물류 · 통행',icon:'forklift'},
-    {id:'custom',label:'사용자 라벨',icon:'tag'}
-  ],
-  templates: [
-    {id:'pipe-water',category:'pipe',name:'용수 배관',kind:'pipe',icon:'droplet',text:'용수 WATER',subtext:'',purposeId:'water',styleId:'classic-arrow'},
-    {id:'pipe-cooling',category:'pipe',name:'냉각수 배관',kind:'pipe',icon:'snow',text:'냉각수 COOLING WATER',subtext:'',purposeId:'cooling',styleId:'classic-arrow'},
-    {id:'pipe-air',category:'pipe',name:'압축공기 배관',kind:'pipe',icon:'wind',text:'압축공기 AIR',subtext:'',purposeId:'air',styleId:'ribbon-arrow'},
-    {id:'pipe-steam',category:'pipe',name:'스팀 배관',kind:'pipe',icon:'steam',text:'STEAM',subtext:'',purposeId:'steam',styleId:'classic-arrow'},
-    {id:'pipe-gas',category:'pipe',name:'가스 배관',kind:'pipe',icon:'flame',text:'GAS',subtext:'',purposeId:'gas',styleId:'classic-arrow'},
-    {id:'pipe-fire',category:'pipe',name:'소방 배관',kind:'pipe',icon:'extinguisher',text:'FIRE WATER',subtext:'',purposeId:'fire',styleId:'double-arrow'},
-    {id:'pipe-chemical',category:'pipe',name:'화학 배관',kind:'pipe',icon:'flask',text:'CHEMICAL',subtext:'',purposeId:'chemical',styleId:'hazard-band'},
-    {id:'pipe-drain',category:'pipe',name:'드레인 배관',kind:'pipe',icon:'waste',text:'DRAIN',subtext:'',purposeId:'drain',styleId:'boxed'},
+(() => {
+  const pipeFamilies = [
+    {id:'pvc-vp',name:'PVC VP',geometry:'round',standard:'JIS K 6741 계열 참고',items:[['13',18],['16',22],['20',26],['25',32],['30',38],['40',48],['50',60],['65',76],['75',89],['100',114],['125',140],['150',165],['200',216],['250',267],['300',318]].map(([n,od])=>({id:`VP-${n}`,label:`VP ${n}`,od}))},
+    {id:'pvc-vu',name:'PVC VU',geometry:'round',standard:'JIS K 6741 계열 참고',items:[['40',48],['50',60],['65',76],['75',89],['100',114],['125',140],['150',165],['200',216],['250',267],['300',318]].map(([n,od])=>({id:`VU-${n}`,label:`VU ${n}`,od}))},
+    {id:'steel-sgp',name:'강관 SGP',geometry:'round',standard:'JIS G 3452 계열 참고',items:[['15A',21.7],['20A',27.2],['25A',34],['32A',42.7],['40A',48.6],['50A',60.5],['65A',76.3],['80A',89.1],['90A',101.6],['100A',114.3],['125A',139.8],['150A',165.2],['200A',216.3],['250A',267.4],['300A',318.5]].map(([n,od])=>({id:`SGP-${n}`,label:`SGP ${n}`,od}))},
+    {id:'sus',name:'SUS 배관',geometry:'round',standard:'JIS 계열 외경 참고',items:[['15A',21.7],['20A',27.2],['25A',34],['32A',42.7],['40A',48.6],['50A',60.5],['65A',76.3],['80A',89.1],['100A',114.3],['125A',139.8],['150A',165.2]].map(([n,od])=>({id:`SUS-${n}`,label:`SUS ${n}`,od}))},
+    {id:'square',name:'정사각 각관',geometry:'rect',standard:'일반 규격 예시',items:[20,25,30,40,50,60,75,80,100,125,150].map(a=>({id:`SQ-${a}`,label:`${a} × ${a} mm`,a,b:a}))},
+    {id:'rect',name:'직사각 각관',geometry:'rect',standard:'일반 규격 예시',items:[[30,20],[40,20],[40,25],[50,25],[50,30],[60,30],[75,45],[80,40],[100,50],[100,75],[125,75],[150,100],[200,100]].map(([a,b])=>({id:`RT-${a}-${b}`,label:`${a} × ${b} mm`,a,b}))},
+    {id:'custom-round',name:'원형 직접 입력',geometry:'round',standard:'사용자 입력',items:[{id:'CUSTOM-R',label:'외경 직접 입력',od:26,custom:true}]},
+    {id:'custom-flat',name:'평면 직접 입력',geometry:'flat',standard:'사용자 입력',items:[{id:'CUSTOM-F',label:'면 크기 직접 입력',a:100,b:50,custom:true}]}
+  ];
 
-    {id:'danger-pinch',category:'warning',name:'위험 · 손 끼임',kind:'sign',signal:'DANGER',signalKo:'위험',tone:'danger',icon:'pinch',text:'손 끼임 위험',subtext:'가동 중 손을 넣지 마십시오',styleId:'ansi-header',width:120,height:60},
-    {id:'warning-electric',category:'warning',name:'감전 위험',kind:'sign',signal:'WARNING',signalKo:'경고',tone:'warning',icon:'bolt',text:'감전 위험',subtext:'전원 차단 후 작업',styleId:'ansi-header',width:120,height:60},
-    {id:'warning-hot',category:'warning',name:'고온 표면',kind:'sign',signal:'CAUTION',signalKo:'주의',tone:'caution',icon:'hot',text:'고온 표면',subtext:'접촉 시 화상 위험',styleId:'iso-panel',width:120,height:60},
-    {id:'warning-rotation',category:'warning',name:'회전체 주의',kind:'sign',signal:'WARNING',signalKo:'경고',tone:'warning',icon:'rotation',text:'회전체 주의',subtext:'가동 중 접근 금지',styleId:'hazard-band',width:120,height:60},
-    {id:'warning-fall',category:'warning',name:'추락 위험',kind:'sign',signal:'DANGER',signalKo:'위험',tone:'danger',icon:'fall',text:'추락 위험',subtext:'안전대 체결',styleId:'ansi-header',width:120,height:60},
-    {id:'warning-slip',category:'warning',name:'미끄럼 주의',kind:'sign',signal:'CAUTION',signalKo:'주의',tone:'caution',icon:'slip',text:'미끄럼 주의',subtext:'바닥 상태를 확인하세요',styleId:'iso-panel',width:120,height:60},
-    {id:'warning-cut',category:'warning',name:'절단 위험',kind:'sign',signal:'DANGER',signalKo:'위험',tone:'danger',icon:'cut',text:'절단 위험',subtext:'보호장갑 착용',styleId:'ansi-header',width:120,height:60},
-    {id:'warning-pressure',category:'warning',name:'고압 주의',kind:'sign',signal:'WARNING',signalKo:'경고',tone:'warning',icon:'gauge',text:'고압 주의',subtext:'압력 제거 후 분해',styleId:'technical',width:120,height:60},
-    {id:'warning-crush',category:'warning',name:'협착 위험',kind:'sign',signal:'DANGER',signalKo:'위험',tone:'danger',icon:'crush',text:'협착 위험',subtext:'작동 반경 접근 금지',styleId:'ansi-header',width:120,height:60},
-    {id:'warning-laser',category:'warning',name:'레이저 주의',kind:'sign',signal:'WARNING',signalKo:'경고',tone:'warning',icon:'laser',text:'레이저 방사',subtext:'보호안경 착용',styleId:'hazard-band',width:120,height:60},
+  const pipePurposes = [
+    ['water','일반 용수','#168A5B','#0B5137','#FFFFFF','droplet','용수 WATER'],
+    ['potable','상수 / 음용수','#168A5B','#0B5137','#FFFFFF','droplet','상수 WATER'],
+    ['cooling','냉각수','#168A5B','#0B5137','#FFFFFF','snow','냉각수 COOLING WATER'],
+    ['chilled','냉수 / CHW','#168A5B','#0B5137','#FFFFFF','snow','CHILLED WATER'],
+    ['air','압축공기','#2E6FD0','#173D78','#FFFFFF','wind','압축공기 AIR'],
+    ['steam','스팀 / 증기','#9AA0A6','#555B60','#111111','steam','STEAM'],
+    ['hotwater','온수 / 급탕','#9AA0A6','#555B60','#111111','hot','HOT WATER'],
+    ['fire','소방','#D92532','#7B1018','#FFFFFF','extinguisher','FIRE WATER'],
+    ['gas','가스 / 가연성','#F5C542','#624A00','#111111','flame','GAS'],
+    ['chemical','화학 / 부식','#F07A22','#7A3300','#111111','flask','CHEMICAL'],
+    ['waste','폐수 / 배수','#263238','#000000','#FFFFFF','waste','WASTE WATER'],
+    ['nitrogen','질소 N₂','#B19CE5','#56408D','#111111','wind','NITROGEN N₂'],
+    ['oxygen','산소 O₂','#7BCB68','#356A2B','#10200D','wind','OXYGEN O₂'],
+    ['vacuum','진공','#F2F4F7','#27313A','#111827','gauge','VACUUM'],
+    ['custom','사용자 지정','#F8FAFC','#334155','#111827','tag','CUSTOM']
+  ].map(([id,label,fill,stroke,text,icon,defaultText])=>({id,label,fill,stroke,text,icon,defaultText}));
 
-    {id:'no-entry',category:'prohibition',name:'출입 금지',kind:'sign',tone:'prohibition',icon:'no-entry',text:'출입 금지',subtext:'관계자 외 출입 금지',styleId:'symbol-left',width:120,height:55},
-    {id:'no-operation',category:'prohibition',name:'작동 금지',kind:'sign',tone:'prohibition',icon:'hand-stop',text:'작동 금지',subtext:'점검 작업 중',styleId:'symbol-left',width:120,height:55},
-    {id:'no-smoking',category:'prohibition',name:'금연',kind:'sign',tone:'prohibition',icon:'smoking',text:'금연',subtext:'NO SMOKING',styleId:'iso-panel',width:100,height:100},
-    {id:'no-flame',category:'prohibition',name:'화기 금지',kind:'sign',tone:'prohibition',icon:'flame',text:'화기 금지',subtext:'NO OPEN FLAME',styleId:'iso-panel',width:100,height:100},
-    {id:'do-not-touch',category:'prohibition',name:'손대지 마시오',kind:'sign',tone:'prohibition',icon:'hand-stop',text:'손대지 마시오',subtext:'DO NOT TOUCH',styleId:'symbol-left',width:120,height:55},
+  const categories = [
+    ['pipe','배관 · 유체'],['warning','위험 · 경고'],['prohibition','금지 · 제한'],['mandatory','보호구 · 지시'],
+    ['emergency','비상 · 소방'],['loto','LOTO · 점검'],['electrical','전기 · 에너지'],['machine','기계 · 설비'],
+    ['chemical','화학 · 물질'],['logistics','물류 · 통행'],['floor','구역 · 바닥'],['warehouse','창고 · 적재'],
+    ['asset','명판 · 자산'],['custom','사용자 라벨']
+  ].map(([id,label])=>({id,label}));
 
-    {id:'wear-helmet',category:'mandatory',name:'안전모 착용',kind:'sign',tone:'mandatory',icon:'helmet',text:'안전모 착용',subtext:'SAFETY HELMET',styleId:'symbol-left',width:120,height:55},
-    {id:'wear-glasses',category:'mandatory',name:'보안경 착용',kind:'sign',tone:'mandatory',icon:'glasses',text:'보안경 착용',subtext:'EYE PROTECTION',styleId:'symbol-left',width:120,height:55},
-    {id:'wear-gloves',category:'mandatory',name:'보호장갑 착용',kind:'sign',tone:'mandatory',icon:'glove',text:'보호장갑 착용',subtext:'WEAR GLOVES',styleId:'symbol-left',width:120,height:55},
-    {id:'hearing-protection',category:'mandatory',name:'귀마개 착용',kind:'sign',tone:'mandatory',icon:'hearing',text:'청력 보호구 착용',subtext:'HEARING PROTECTION',styleId:'symbol-left',width:120,height:55},
-    {id:'safety-shoes',category:'mandatory',name:'안전화 착용',kind:'sign',tone:'mandatory',icon:'boot',text:'안전화 착용',subtext:'SAFETY SHOES',styleId:'symbol-left',width:120,height:55},
-    {id:'wear-mask',category:'mandatory',name:'마스크 착용',kind:'sign',tone:'mandatory',icon:'mask',text:'보호마스크 착용',subtext:'RESPIRATORY PROTECTION',styleId:'symbol-left',width:120,height:55},
-    {id:'wear-harness',category:'mandatory',name:'안전대 착용',kind:'sign',tone:'mandatory',icon:'harness',text:'안전대 착용',subtext:'FALL PROTECTION',styleId:'symbol-left',width:120,height:55},
+  const T = [];
+  const add = (category,id,name,icon,text,subtext,tone='neutral',style='panel',sizeProfile='near',extra={}) => T.push({category,id,name,icon,text,subtext,tone,style,sizeProfile,kind:'sign',...extra});
 
-    {id:'maintenance',category:'equipment',name:'점검 중',kind:'sign',tone:'notice',icon:'wrench',text:'점검 중',subtext:'MAINTENANCE IN PROGRESS',styleId:'industrial-tag',width:120,height:55},
-    {id:'loto',category:'equipment',name:'LOTO 잠금',kind:'sign',tone:'danger',icon:'lock',text:'잠금 · 표찰 실시',subtext:'LOCK OUT / TAG OUT',styleId:'industrial-tag',width:120,height:55},
-    {id:'machine-running',category:'equipment',name:'기계 가동 중',kind:'sign',tone:'warning',icon:'gear',text:'기계 가동 중',subtext:'MACHINE RUNNING',styleId:'technical',width:120,height:55},
-    {id:'out-of-service',category:'equipment',name:'사용 금지 / 고장',kind:'sign',tone:'danger',icon:'wrench',text:'사용 금지',subtext:'OUT OF SERVICE',styleId:'stencil',width:120,height:55},
-    {id:'valve-open',category:'equipment',name:'밸브 열림',kind:'sign',tone:'notice',icon:'valve',text:'VALVE OPEN',subtext:'열림 상태 유지',styleId:'boxed',width:100,height:45},
-    {id:'valve-close',category:'equipment',name:'밸브 닫힘',kind:'sign',tone:'prohibition',icon:'valve',text:'VALVE CLOSED',subtext:'닫힘 상태 유지',styleId:'boxed',width:100,height:45},
-    {id:'equipment-id',category:'equipment',name:'설비 번호표',kind:'sign',tone:'neutral',icon:'gear',text:'P-101',subtext:'COOLING WATER PUMP',styleId:'technical',width:120,height:50},
+  // pipe
+  [
+    ['pipe-water','용수 배관','droplet','용수 WATER','water'],['pipe-cooling','냉각수 배관','snow','냉각수 COOLING WATER','cooling'],
+    ['pipe-air','압축공기 배관','wind','압축공기 AIR','air'],['pipe-steam','스팀 배관','steam','STEAM','steam'],
+    ['pipe-gas','가스 배관','flame','GAS','gas'],['pipe-fire','소방 배관','extinguisher','FIRE WATER','fire'],
+    ['pipe-chemical','화학 배관','flask','CHEMICAL','chemical'],['pipe-drain','드레인 배관','waste','DRAIN','waste'],
+    ['pipe-nitrogen','질소 배관','wind','NITROGEN N₂','nitrogen'],['pipe-oxygen','산소 배관','wind','OXYGEN O₂','oxygen']
+  ].forEach(([id,name,icon,text,purposeId])=>T.push({category:'pipe',id,name,icon,text,subtext:'',purposeId,kind:'pipe',tone:'pipe',style:'pipe-arrow',sizeProfile:'pipe-compact'}));
 
-    {id:'emergency-exit',category:'emergency',name:'비상구',kind:'sign',tone:'emergency',icon:'exit',text:'비상구',subtext:'EMERGENCY EXIT',styleId:'symbol-left',width:120,height:55},
-    {id:'fire-extinguisher',category:'emergency',name:'소화기',kind:'sign',tone:'fire',icon:'extinguisher',text:'소화기',subtext:'FIRE EXTINGUISHER',styleId:'symbol-left',width:120,height:55},
-    {id:'first-aid',category:'emergency',name:'응급처치',kind:'sign',tone:'emergency',icon:'cross',text:'응급처치함',subtext:'FIRST AID',styleId:'symbol-left',width:120,height:55},
-    {id:'aed',category:'emergency',name:'AED',kind:'sign',tone:'emergency',icon:'aed',text:'자동심장충격기',subtext:'AED',styleId:'symbol-left',width:120,height:55},
-    {id:'eyewash',category:'emergency',name:'세안대',kind:'sign',tone:'emergency',icon:'eyewash',text:'비상 세안대',subtext:'EYE WASH',styleId:'symbol-left',width:120,height:55},
-    {id:'safety-shower',category:'emergency',name:'비상 샤워',kind:'sign',tone:'emergency',icon:'shower',text:'비상 샤워',subtext:'SAFETY SHOWER',styleId:'symbol-left',width:120,height:55},
+  // warning
+  add('warning','pinch','손 끼임 위험','pinch','손 끼임 위험','가동 중 손을 넣지 마십시오','danger','signal','near');
+  add('warning','electric','감전 위험','bolt','감전 위험','전원 차단 후 작업','danger','signal','near');
+  add('warning','hot','고온 표면','hot','고온 표면','접촉 시 화상 위험','warning','symbol','near');
+  add('warning','rotation','회전체 주의','rotation','회전체 주의','가동 중 접근 금지','warning','hazard','near');
+  add('warning','fall','추락 위험','fall','추락 위험','안전대 체결','danger','signal','wall');
+  add('warning','slip','미끄럼 주의','slip','미끄럼 주의','바닥 상태 확인','warning','symbol','near');
+  add('warning','cut','절단 위험','cut','절단 위험','보호장갑 착용','danger','signal','near');
+  add('warning','pressure','고압 주의','gauge','고압 주의','압력 제거 후 분해','warning','technical','near');
+  add('warning','crush','협착 위험','crush','협착 위험','작동 반경 접근 금지','danger','signal','near');
+  add('warning','laser','레이저 주의','laser','레이저 방사','보호안경 착용','warning','hazard','near');
 
-    {id:'forklift',category:'logistics',name:'지게차 주의',kind:'sign',tone:'warning',icon:'forklift',text:'지게차 통행 주의',subtext:'FORKLIFT TRAFFIC',styleId:'hazard-band',width:120,height:60},
-    {id:'overhead-load',category:'logistics',name:'낙하물 주의',kind:'sign',tone:'warning',icon:'load',text:'낙하물 주의',subtext:'OVERHEAD LOAD',styleId:'ansi-header',width:120,height:60},
-    {id:'pedestrian',category:'logistics',name:'보행자 통로',kind:'sign',tone:'mandatory',icon:'pedestrian',text:'보행자 통로',subtext:'PEDESTRIAN ROUTE',styleId:'symbol-left',width:120,height:55},
-    {id:'loading-zone',category:'logistics',name:'상하차 구역',kind:'sign',tone:'notice',icon:'forklift',text:'상하차 구역',subtext:'LOADING ZONE',styleId:'technical',width:120,height:55},
-    {id:'speed-limit',category:'logistics',name:'제한 속도',kind:'sign',tone:'prohibition',icon:'speed',text:'10',subtext:'km/h 제한',styleId:'speed-sign',width:80,height:80},
+  // prohibition
+  add('prohibition','no-entry','출입 금지','no-entry','출입 금지','관계자 외 출입 금지','prohibition','symbol','wall');
+  add('prohibition','no-operation','작동 금지','hand-stop','작동 금지','점검 작업 중','prohibition','symbol','near');
+  add('prohibition','no-smoking','금연','smoking','금연','NO SMOKING','prohibition','symbol','near');
+  add('prohibition','no-flame','화기 금지','flame','화기 금지','NO OPEN FLAME','prohibition','symbol','near');
+  add('prohibition','do-not-touch','손대지 마시오','hand-stop','손대지 마시오','DO NOT TOUCH','prohibition','symbol','near');
+  add('prohibition','speed10','제한속도 10','speed','10','km/h 제한','prohibition','round','near',{width:80,height:80});
 
-    {id:'custom-blank',category:'custom',name:'빈 라벨',kind:'sign',tone:'neutral',icon:'tag',text:'사용자 라벨',subtext:'내용을 입력하세요',styleId:'boxed',width:120,height:55},
-    {id:'custom-arrow',category:'custom',name:'방향 화살표',kind:'sign',tone:'notice',icon:'arrow',text:'방향 안내',subtext:'',styleId:'direction-sign',width:120,height:55}
-  ],
-  layouts: [
-    {id:'classic-arrow',label:'기본 화살표',group:'pipe',desc:'기존 산업용 표준 화살표'},
-    {id:'ribbon-arrow',label:'리본 화살표',group:'pipe',desc:'양끝이 접힌 화살표 밴드'},
-    {id:'double-arrow',label:'양방향 화살표',group:'pipe',desc:'흐름 방향을 양쪽으로 강조'},
-    {id:'boxed',label:'박스 라벨',group:'all',desc:'단순하고 선명한 기본 명판'},
-    {id:'hazard-band',label:'경고 스트라이프',group:'all',desc:'위험·주의를 강하게 강조'},
-    {id:'ansi-header',label:'헤더 경고판',group:'sign',desc:'상단 신호어 + 큰 픽토그램'},
-    {id:'iso-panel',label:'심볼 중심',group:'sign',desc:'안전 심볼을 크게 보여주는 구성'},
-    {id:'symbol-left',label:'심볼 + 문구',group:'sign',desc:'왼쪽 픽토그램과 오른쪽 문구'},
-    {id:'industrial-tag',label:'작업 태그',group:'sign',desc:'점검·LOTO용 현장 태그'},
-    {id:'technical',label:'테크니컬 명판',group:'all',desc:'설비 번호·기술정보에 적합'},
-    {id:'stencil',label:'스텐실',group:'all',desc:'현장 표기 느낌의 굵은 테두리'},
-    {id:'outline',label:'아웃라인',group:'all',desc:'흰 바탕 + 색상 선으로 잉크 절약'},
-    {id:'capsule',label:'캡슐',group:'all',desc:'둥근 소형 라벨'},
-    {id:'split-card',label:'분할 패널',group:'all',desc:'아이콘과 문구 영역 분리'},
-    {id:'direction-sign',label:'방향 안내판',group:'sign',desc:'큰 방향 화살표 중심'},
-    {id:'speed-sign',label:'원형 제한표지',group:'sign',desc:'원형 속도·숫자 표지'}
-  ],
-  tones: {
-    neutral:{fill:'#F8FAFC',accent:'#25313B',text:'#111827',signal:'#25313B'},
-    notice:{fill:'#E8F1F8',accent:'#1A628F',text:'#10212C',signal:'#1A628F'},
-    danger:{fill:'#FFFFFF',accent:'#C62828',text:'#111111',signal:'#C62828'},
-    warning:{fill:'#FFF4CF',accent:'#F0A000',text:'#111111',signal:'#E18A00'},
-    caution:{fill:'#FFF7A8',accent:'#E0B600',text:'#111111',signal:'#D8A900'},
-    prohibition:{fill:'#FFFFFF',accent:'#D32F2F',text:'#111111',signal:'#D32F2F'},
-    mandatory:{fill:'#E8F2FF',accent:'#1565C0',text:'#0C2742',signal:'#1565C0'},
-    emergency:{fill:'#EAF8EE',accent:'#138A49',text:'#0D3A22',signal:'#138A49'},
-    fire:{fill:'#FFF0F0',accent:'#C62828',text:'#5A1111',signal:'#C62828'}
-  },
-  coverage: {
-    round:[{id:'flat',label:'한쪽만',ratio:0,repeats:1},{id:'half',label:'반둘레 1/2',ratio:.5,repeats:2},{id:'three-quarter',label:'3/4 둘레',ratio:.75,repeats:3},{id:'full',label:'한바퀴 360°',ratio:1,repeats:4}],
-    rect:[{id:'face-a',label:'A면 1면',faces:'a',repeats:1},{id:'face-b',label:'B면 1면',faces:'b',repeats:1},{id:'two-face',label:'2면 연속',faces:'ab',repeats:2},{id:'full',label:'4면 한바퀴',faces:'perimeter',repeats:4}],
-    angle:[{id:'face-a',label:'한쪽 면',faces:'a',repeats:1},{id:'two-face',label:'양쪽 면',faces:'ab',repeats:2}],
-    flat:[{id:'face-a',label:'가로면 기준',faces:'a',repeats:1},{id:'face-b',label:'세로면 기준',faces:'b',repeats:1}]
-  },
-  sizePresets:[
-    {id:'60x30',label:'60 × 30',w:60,h:30},{id:'80x40',label:'80 × 40',w:80,h:40},{id:'100x50',label:'100 × 50',w:100,h:50},{id:'120x55',label:'120 × 55',w:120,h:55},{id:'120x60',label:'120 × 60',w:120,h:60},{id:'150x75',label:'150 × 75',w:150,h:75},{id:'180x90',label:'180 × 90',w:180,h:90},{id:'200x100',label:'200 × 100',w:200,h:100}
-  ],
-  themes:[
-    {id:'industrial',label:'Industrial',desc:'정돈된 산업용 컨트롤 UI'},
-    {id:'blueprint',label:'Blueprint',desc:'설비 도면 느낌의 청색 테마'},
-    {id:'workshop',label:'Workshop',desc:'현장 작업표 스타일'},
-    {id:'light',label:'Clean Light',desc:'밝고 단순한 작업 화면'},
-    {id:'dark',label:'Dark Control',desc:'어두운 제어실 분위기'},
-    {id:'mono',label:'Mono',desc:'무채색 문서형 인터페이스'}
-  ]
-};
+  // mandatory
+  add('mandatory','helmet','안전모 착용','helmet','안전모 착용','SAFETY HELMET','mandatory','symbol','near');
+  add('mandatory','glasses','보안경 착용','glasses','보안경 착용','EYE PROTECTION','mandatory','symbol','near');
+  add('mandatory','gloves','보호장갑 착용','glove','보호장갑 착용','WEAR GLOVES','mandatory','symbol','near');
+  add('mandatory','hearing','청력 보호구','hearing','귀마개 착용','HEARING PROTECTION','mandatory','symbol','near');
+  add('mandatory','shoes','안전화 착용','boot','안전화 착용','SAFETY SHOES','mandatory','symbol','near');
+  add('mandatory','mask','마스크 착용','mask','보호마스크 착용','RESPIRATORY PROTECTION','mandatory','symbol','near');
+  add('mandatory','harness','안전대 착용','harness','안전대 착용','FALL PROTECTION','mandatory','symbol','near');
+
+  // emergency/fire
+  add('emergency','exit','비상구','exit','비상구','EMERGENCY EXIT','emergency','symbol','wall');
+  add('emergency','extinguisher','소화기','extinguisher','소화기','FIRE EXTINGUISHER','fire','symbol','wall');
+  add('emergency','firstaid','응급처치함','cross','응급처치함','FIRST AID','emergency','symbol','near');
+  add('emergency','aed','AED','aed','자동심장충격기','AED','emergency','symbol','near');
+  add('emergency','eyewash','세안대','eyewash','비상 세안대','EYE WASH','emergency','symbol','near');
+  add('emergency','shower','비상 샤워','shower','비상 샤워','SAFETY SHOWER','emergency','symbol','near');
+
+  // loto/maintenance
+  add('loto','maintenance','점검 중','wrench','점검 중','MAINTENANCE IN PROGRESS','notice','tag','equipment');
+  add('loto','lockout','LOTO 잠금','lock','잠금 · 표찰 실시','LOCK OUT / TAG OUT','danger','tag','equipment');
+  add('loto','do-not-start','기동 금지','hand-stop','기동 금지','DO NOT START','danger','tag','equipment');
+  add('loto','out-service','사용 금지','wrench','사용 금지','OUT OF SERVICE','danger','tag','equipment');
+  add('loto','inspection','검사 중','wrench','검사 중','INSPECTION IN PROGRESS','notice','tag','equipment');
+
+  // electrical
+  add('electrical','high-voltage','고전압','bolt','고전압 위험','HIGH VOLTAGE','danger','signal','near');
+  add('electrical','panel','분전반','bolt','분전반','DISTRIBUTION PANEL','notice','technical','equipment');
+  add('electrical','emergency-stop','비상정지','hand-stop','비상정지','EMERGENCY STOP','danger','button','equipment');
+  add('electrical','ground','접지','bolt','접지','GROUND','mandatory','technical','equipment');
+  add('electrical','breaker-off','차단기 OFF','bolt','차단기 OFF','BREAKER OFF','notice','tag','equipment');
+
+  // machine/equipment
+  add('machine','running','기계 가동 중','gear','기계 가동 중','MACHINE RUNNING','warning','technical','equipment');
+  add('machine','pump','펌프 명판','gear','P-101','COOLING WATER PUMP','neutral','nameplate','asset');
+  add('machine','valve-open','밸브 열림','valve','VALVE OPEN','열림 상태 유지','notice','small','equipment');
+  add('machine','valve-close','밸브 닫힘','valve','VALVE CLOSED','닫힘 상태 유지','prohibition','small','equipment');
+  add('machine','manual-auto','수동/자동','gear','MANUAL / AUTO','운전 모드 표시','neutral','technical','equipment');
+  add('machine','lubrication','급유 위치','droplet','급유 위치','LUBRICATION POINT','notice','small','equipment');
+
+  // chemical
+  add('chemical','acid','산 / 알칼리','flask','산 · 알칼리 주의','ACID / ALKALI','warning','symbol','near');
+  add('chemical','flammable','인화성 물질','flame','인화성 물질','FLAMMABLE','danger','signal','near');
+  add('chemical','chemical-area','화학물질 취급구역','flask','화학물질 취급구역','CHEMICAL AREA','warning','hazard','wall');
+  add('chemical','waste-chemical','폐화학물','flask','폐화학물','CHEMICAL WASTE','notice','technical','near');
+  add('chemical','spill','누출 대응','flask','누출 대응 키트','SPILL KIT','emergency','symbol','near');
+
+  // logistics
+  add('logistics','forklift','지게차 주의','forklift','지게차 통행 주의','FORKLIFT TRAFFIC','warning','hazard','wall');
+  add('logistics','overhead','낙하물 주의','load','낙하물 주의','OVERHEAD LOAD','warning','signal','wall');
+  add('logistics','pedestrian','보행자 통로','pedestrian','보행자 통로','PEDESTRIAN ROUTE','mandatory','symbol','wall');
+  add('logistics','loading','상하차 구역','forklift','상하차 구역','LOADING ZONE','notice','technical','wall');
+  add('logistics','oneway','일방통행','arrow','일방통행','ONE WAY','notice','direction','wall');
+
+  // floor/area
+  add('floor','keep-clear','통로 확보','arrow','통로 확보','KEEP CLEAR','warning','floor','wall');
+  add('floor','restricted','통제구역','no-entry','통제구역','RESTRICTED AREA','prohibition','floor','wall');
+  add('floor','ppe-zone','보호구 착용구역','helmet','보호구 착용구역','PPE REQUIRED','mandatory','floor','wall');
+  add('floor','hot-zone','고온 작업구역','hot','고온 작업구역','HOT WORK AREA','warning','floor','wall');
+  add('floor','clean-zone','청정구역','mandatory','청정구역','CLEAN AREA','notice','floor','wall');
+
+  // warehouse
+  add('warehouse','rack-max','랙 최대하중','load','최대 적재하중','MAX LOAD 1,000 kg','warning','technical','wall');
+  add('warehouse','location','로케이션','tag','A-01-03','WAREHOUSE LOCATION','neutral','nameplate','asset');
+  add('warehouse','fifo','FIFO','arrow','선입선출','FIFO','notice','technical','near');
+  add('warehouse','quarantine','격리품','no-entry','격리품','QUARANTINE','warning','hazard','near');
+  add('warehouse','completed','완료품','mandatory','완료품','FINISHED GOODS','notice','technical','near');
+
+  // asset/nameplate
+  add('asset','asset-id','자산 번호표','tag','ASSET-0001','설비 자산번호','neutral','nameplate','asset');
+  add('asset','qr-area','QR 명판','tag','설비 정보','QR / ID 영역','neutral','nameplate','asset');
+  add('asset','cable-tag','케이블 태그','bolt','CBL-01-001','FROM → TO','neutral','small','equipment');
+  add('asset','panel-id','판넬 번호','bolt','MCC-01','MOTOR CONTROL CENTER','neutral','nameplate','asset');
+  add('asset','room-id','실명 표지','tag','기계실','MACHINE ROOM','neutral','panel','wall');
+
+  // custom
+  add('custom','blank','빈 라벨','tag','사용자 라벨','내용을 입력하세요','neutral','panel','near');
+  add('custom','custom-arrow','방향 안내','arrow','방향 안내','','notice','direction','near');
+  add('custom','custom-round','원형 표지','prohibition','사용자 표지','','prohibition','round','near',{width:80,height:80});
+
+  const tones = {
+    neutral:{fill:'#FFFFFF',accent:'#26323A',text:'#111827'}, notice:{fill:'#EAF4FB',accent:'#176B9A',text:'#10212C'},
+    danger:{fill:'#FFFFFF',accent:'#C62828',text:'#111111'}, warning:{fill:'#FFF4CF',accent:'#F0A000',text:'#111111'},
+    prohibition:{fill:'#FFFFFF',accent:'#D32F2F',text:'#111111'}, mandatory:{fill:'#E9F2FF',accent:'#1565C0',text:'#0C2742'},
+    emergency:{fill:'#ECF8EF',accent:'#138A49',text:'#0D3A22'}, fire:{fill:'#FFF0F0',accent:'#C62828',text:'#5A1111'}, pipe:{fill:'#168A5B',accent:'#0B5137',text:'#FFFFFF'}
+  };
+
+  const signSizeProfiles = [
+    {id:'equipment',label:'장비 부착 소형',desc:'가까이에서 보는 장비·밸브·태그',w:80,h:40},
+    {id:'near',label:'근거리 표준',desc:'작업자 근처 표지 / 장비 주변',w:120,h:60},
+    {id:'wall',label:'일반 벽면',desc:'통로·출입구·작업구역',w:150,h:75},
+    {id:'distance',label:'원거리 강조',desc:'넓은 작업장·창고에서 멀리 식별',w:200,h:100},
+    {id:'asset',label:'명판형',desc:'자산·설비번호 / 세부정보',w:100,h:50},
+    {id:'custom',label:'직접 입력',desc:'가로·세로를 직접 입력',w:120,h:60}
+  ];
+
+  const pipeSizingModes = [
+    {id:'compact',label:'A4 현장 절약형',desc:'A4에 여러 장 배치하기 쉬운 실용 기본값. 법정·표준 적합을 의미하지 않음.'},
+    {id:'asme',label:'ASME A13.1 참고',desc:'배관 외경에 따른 색상대 길이·문자 높이 참고값. 현장 규정 우선.'},
+    {id:'custom',label:'직접 크기',desc:'현재 설치 공간에 맞게 직접 지정'}
+  ];
+
+  window.PM_CATALOG = {version:4,pipeFamilies,pipePurposes,categories,templates:T,tones,signSizeProfiles,pipeSizingModes};
+})();
