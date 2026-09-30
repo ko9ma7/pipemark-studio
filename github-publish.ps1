@@ -141,7 +141,7 @@ try {
     & git diff --cached --quiet
     $DiffCode = $LASTEXITCODE
     if ($DiffCode -eq 1) {
-        & git commit -m 'feat: publish PipeMark Studio v4.0.1'
+        & git commit -m 'feat: publish PipeMark Studio v5'
         if ($LASTEXITCODE -ne 0) { Stop-WithError 'git commit failed.' }
         Write-Ok 'Commit created'
     } elseif ($DiffCode -eq 0) {
@@ -202,7 +202,7 @@ try {
                 if ($LASTEXITCODE -ne 0) { Stop-WithError 'Could not stage the project after attaching remote history.' }
                 & git diff --cached --quiet
                 if ($LASTEXITCODE -eq 1) {
-                    & git commit -m 'feat: update PipeMark Studio v4'
+                    & git commit -m 'feat: update PipeMark Studio v5'
                     if ($LASTEXITCODE -ne 0) { Stop-WithError 'Could not create the update commit.' }
                     Write-Ok 'Update commit created on top of the existing GitHub history'
                 }
@@ -222,7 +222,7 @@ try {
     }
 
     Write-Step 'Updating GitHub repository details'
-    $RepoDescription = 'Local-first industrial label maker for pipe markers, safety signs, equipment labels and printable SVG layouts.'
+    $RepoDescription = 'Visual industrial label studio for pipe markers, safety signs, equipment labels, direct SVG editing and A4/A3 print layouts. Local-first and GitHub Pages ready.'
     & gh api --method PATCH "repos/$FullRepo" -f description=$RepoDescription -f homepage=$SiteUrl -F has_issues=true -F has_projects=false -F has_wiki=false | Out-Null
     if ($LASTEXITCODE -ne 0) {
         Write-Warn 'Repository description/homepage could not be updated automatically.'
@@ -230,7 +230,7 @@ try {
         Write-Ok 'Description and Website were added to Repository details'
     }
 
-    $TopicJson = @{ names = @('github-pages','label-maker','svg','pipe-markers','safety-signs','industrial','local-first','print-tools') } | ConvertTo-Json -Compress
+    $TopicJson = @{ names = @('github-pages','label-maker','svg-editor','pipe-markers','safety-signs','industrial-design','local-first','print-tools') } | ConvertTo-Json -Compress
     $TopicJson | & gh api --method PUT "repos/$FullRepo/topics" --input - | Out-Null
     if ($LASTEXITCODE -ne 0) {
         Write-Warn 'Repository topics could not be updated automatically.'

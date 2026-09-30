@@ -1,130 +1,178 @@
 ﻿<!doctype html>
-<html lang="ko" data-theme="industrial">
+<html lang="ko" data-theme="studio">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>PipeMark Studio — 산업용 라벨 · 배관 마커 편집기</title>
-  <meta name="description" content="배관 마커, 위험·금지·보호구·비상·설비·물류 라벨을 기본 규격으로 빠르게 만들고, 필요할 때 글자와 SVG를 화면에서 직접 이동·크기조절·회전하는 로컬 우선 산업 라벨 편집기입니다.">
-  <meta name="theme-color" content="#163b57">
+  <title>PipeMark Studio v5 — 산업용 라벨 · 배관 마커 편집기</title>
+  <meta name="description" content="배관 규격에 맞춰 크기가 자동으로 달라지는 파이프 마커와 안전·설비 라벨을 선택형 템플릿으로 만들고, 글자와 SVG를 화면에서 직접 이동·크기조절·회전하는 로컬 우선 라벨 편집기입니다.">
+  <meta name="theme-color" content="#143b57">
   <link rel="canonical" href="https://ko9ma7.github.io/pipemark-studio/">
-  <meta property="og:type" content="website"><meta property="og:title" content="PipeMark Studio"><meta property="og:description" content="기본값은 빠르게, 필요한 라벨은 화면에서 직접 편집하세요."><meta property="og:url" content="https://ko9ma7.github.io/pipemark-studio/"><meta property="og:image" content="https://ko9ma7.github.io/pipemark-studio/assets/og-image.png"><meta property="og:site_name" content="PipeMark Studio">
-  <meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="PipeMark Studio"><meta name="twitter:description" content="산업용 라벨·배관 마커 로컬 편집기"><meta name="twitter:image" content="https://ko9ma7.github.io/pipemark-studio/assets/og-image.png">
+  <meta property="og:type" content="website"><meta property="og:title" content="PipeMark Studio v5"><meta property="og:description" content="선택만으로 빠르게 만들고, 필요한 부분만 화면에서 직접 편집하는 산업용 라벨 스튜디오"><meta property="og:url" content="https://ko9ma7.github.io/pipemark-studio/"><meta property="og:image" content="https://ko9ma7.github.io/pipemark-studio/assets/og-image.png"><meta property="og:site_name" content="PipeMark Studio">
+  <meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="PipeMark Studio v5"><meta name="twitter:description" content="배관·안전·설비 라벨을 빠르게 만들고 직접 편집"><meta name="twitter:image" content="https://ko9ma7.github.io/pipemark-studio/assets/og-image.png">
   <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml"><link rel="icon" href="./assets/favicon-32.png" sizes="32x32"><link rel="apple-touch-icon" href="./assets/apple-touch-icon.png"><link rel="manifest" href="./manifest.webmanifest"><link rel="stylesheet" href="./style.css">
   <style id="print-style">@page{size:A4 portrait;margin:0}</style>
 </head>
 <body>
 <header class="topbar noprint">
-  <a class="brand" href="./" aria-label="PipeMark Studio 홈"><span class="brandmark">PM</span><span><strong>PipeMark Studio</strong><small>산업용 라벨 · 배관 마커 편집기</small></span></a>
-  <label class="project-name"><span>현장</span><input id="project-name" value="기본 현장"></label>
+  <a class="brand" href="./" aria-label="PipeMark Studio 홈">
+    <span class="brandmark" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M5 10h13v-4l9 10-9 10v-4H5z" fill="currentColor"/><path d="M10 7v18" stroke="white" stroke-width="2.2"/></svg></span>
+    <span><strong>PipeMark Studio</strong><small>산업용 라벨 · 배관 마커 편집기</small></span>
+  </a>
+  <label class="project-name"><span>현장</span><input id="project-name" value="기본 현장" aria-label="현장 이름"></label>
   <span id="save-status" class="save-status"><i></i> 이 PC 자동 저장</span>
   <div class="top-actions">
+    <button id="btn-theme" class="btn ghost" type="button"><span class="btn-icon">◫</span> 화면 디자인</button>
     <button id="btn-save-project" class="btn ghost" type="button">현장 저장</button>
     <button id="btn-projects" class="btn ghost" type="button">불러오기</button>
-    <button id="btn-export" class="btn icon" type="button" title="JSON 백업">↓</button>
-    <button id="btn-import" class="btn icon" type="button" title="JSON 복원">↑</button><input id="file-import" type="file" accept=".json,application/json" hidden>
+    <button id="btn-export" class="btn icon" type="button" title="JSON 백업" aria-label="JSON 백업">↓</button>
+    <button id="btn-import" class="btn icon" type="button" title="JSON 복원" aria-label="JSON 복원">↑</button><input id="file-import" type="file" accept=".json,application/json" hidden>
     <button id="btn-print" class="btn primary" type="button">인쇄 / PDF</button>
   </div>
 </header>
 
 <main class="app-shell">
-  <aside class="quick-panel noprint">
-    <div class="panel-title"><span class="eyebrow">QUICK BUILD</span><h1>기본값은 선택만으로 끝냅니다.</h1><p>필요한 경우에만 아래의 <b>직접 편집</b>을 켜서 글자와 SVG를 손으로 조정하세요.</p></div>
+  <aside class="builder-panel noprint">
+    <div class="builder-hero">
+      <span class="eyebrow">QUICK BUILD</span>
+      <h1>고르고 바로 출력.<br><em>필요할 때만 직접 편집.</em></h1>
+      <p>배관 규격·용도·표지 종류를 고르면 기본 크기와 레이아웃을 자동으로 맞춥니다.</p>
+    </div>
 
-    <section class="card compact">
-      <div class="step-title"><b>1</b><span>라벨 종류</span></div>
-      <label class="field"><span>카테고리</span><select id="category-select"></select></label>
-      <label class="field"><span>기본 템플릿</span><select id="template-select"></select></label>
-      <div id="template-shortcuts" class="template-shortcuts"></div>
-    </section>
-
-    <section id="pipe-options" class="card compact">
-      <div class="step-title"><b>2</b><span>배관 기준</span></div>
-      <label class="field"><span>제품군</span><select id="pipe-family"></select></label>
-      <label class="field"><span>규격</span><select id="pipe-spec"></select></label>
-      <label class="field"><span>유체 / 용도</span><select id="pipe-purpose"></select></label>
-      <label class="field"><span>크기 기준</span><select id="pipe-size-mode"></select></label>
-      <div id="pipe-standard-note" class="note-box"></div>
-      <div class="field-grid two"><label class="field"><span>흐름 방향</span><select id="pipe-direction"><option value="right">오른쪽 →</option><option value="left">← 왼쪽</option><option value="both">↔ 양방향</option><option value="none">화살표 없음</option></select></label><label class="field"><span>스타일</span><select id="pipe-style"><option value="pipe-arrow">기본 화살표</option><option value="pipe-band">밴드형</option><option value="pipe-outline">아웃라인</option><option value="pipe-compact">콤팩트</option></select></label></div>
-    </section>
-
-    <section id="sign-options" class="card compact" hidden>
-      <div class="step-title"><b>2</b><span>사용 범위</span></div>
-      <label class="field"><span>기본 크기</span><select id="sign-size-profile"></select></label>
-      <div id="sign-size-note" class="note-box"></div>
-      <label class="field"><span>스타일</span><select id="sign-style"><option value="panel">일반 패널</option><option value="signal">신호어 헤더</option><option value="symbol">심볼 중심</option><option value="hazard">경고 스트라이프</option><option value="technical">테크니컬</option><option value="tag">작업 태그</option><option value="round">원형 표지</option><option value="direction">방향 안내</option><option value="nameplate">명판</option><option value="small">소형 태그</option><option value="button">버튼/비상정지</option><option value="floor">바닥·구역</option></select></label>
-    </section>
-
-    <section class="card compact">
-      <div class="step-title"><b>3</b><span>내용</span></div>
-      <label class="field"><span>큰 문구</span><input id="main-text" type="text" maxlength="100"></label>
-      <label class="field"><span>보조 문구</span><input id="sub-text" type="text" maxlength="120"></label>
-      <div class="field-grid two"><label class="field"><span>수량</span><input id="quantity" type="number" min="1" max="999" value="1"></label><label class="field"><span>출력 여백</span><select id="label-padding"><option value="normal">보통</option><option value="tight">좁게</option><option value="wide">넓게</option></select></label></div>
-    </section>
-
-    <button id="btn-custom-edit" class="edit-toggle" type="button"><span>직접 편집</span><small>글자·SVG 이동 / 크기 / 회전 / 색상</small><b>열기</b></button>
-
-    <section id="advanced-panel" class="card advanced" hidden>
-      <div class="advanced-head"><div><strong>현재 라벨 세부 설정</strong><span>기본값에서 필요한 부분만 변경합니다.</span></div><button id="btn-reset-layout" type="button">배치 초기화</button></div>
-      <div class="field-grid two"><label class="field"><span>가로 W (mm)</span><input id="label-width" type="number" min="20" step="1"></label><label class="field"><span>세로 H (mm)</span><input id="label-height" type="number" min="10" step="1"></label></div>
-      <div class="field-grid three"><label class="field color"><span>배경</span><input id="fill-color" type="color"></label><label class="field color"><span>강조</span><input id="accent-color" type="color"></label><label class="field color"><span>글자</span><input id="text-color" type="color"></label></div>
-      <div class="divider"></div>
-      <strong class="subhead">선택 객체</strong>
-      <div id="selection-empty" class="selection-empty">미리보기에서 글자 또는 SVG를 클릭하세요.</div>
-      <div id="object-inspector" hidden>
-        <div class="object-tabs"><button type="button" data-object="icon">SVG</button><button type="button" data-object="main">큰 문구</button><button type="button" data-object="sub">보조 문구</button></div>
-        <div class="field-grid two"><label class="field"><span>X (%)</span><input id="obj-x" type="number" step="0.5"></label><label class="field"><span>Y (%)</span><input id="obj-y" type="number" step="0.5"></label></div>
-        <div class="field-grid two"><label class="field"><span>크기</span><input id="obj-size" type="number" min="1" step="0.5"></label><label class="field"><span>회전 (°)</span><input id="obj-rotate" type="number" step="1"></label></div>
-        <div id="text-inspector" hidden>
-          <div class="field-grid two"><label class="field"><span>굵기</span><select id="obj-weight"><option value="500">보통</option><option value="700">굵게</option><option value="800">매우 굵게</option><option value="900">최대</option></select></label><label class="field"><span>정렬</span><select id="obj-align"><option value="left">왼쪽</option><option value="center">가운데</option><option value="right">오른쪽</option></select></label></div>
-          <div class="field-grid two"><label class="field"><span>자간 (em)</span><input id="obj-spacing" type="number" step="0.02" min="-0.2" max="0.5"></label><label class="field"><span>너비 (%)</span><input id="obj-width" type="number" min="10" max="100" step="1"></label></div>
-        </div>
-        <div id="icon-inspector" hidden>
-          <label class="field"><span>기본 SVG</span><select id="icon-select"></select></label>
-          <div class="inline-actions"><button id="btn-svg-upload" type="button">SVG 파일 추가</button><button id="btn-icon-hide" type="button">아이콘 숨김</button></div><input id="svg-file" type="file" accept=".svg,image/svg+xml" hidden>
-        </div>
+    <section class="builder-card">
+      <div class="step-head"><span class="step-no">01</span><div><strong>무엇을 만들까요?</strong><small>카테고리와 템플릿을 선택하세요.</small></div></div>
+      <div id="category-chips" class="category-chips" aria-label="라벨 카테고리"></div>
+      <div class="field-row two">
+        <label class="field"><span>카테고리</span><select id="category-select"></select></label>
+        <label class="field"><span>기본 템플릿</span><select id="template-select"></select></label>
       </div>
+      <div id="template-gallery" class="template-gallery" aria-label="템플릿 미리보기"></div>
+      <button id="btn-template-all" class="text-button" type="button">이 카테고리 전체 템플릿 보기 →</button>
     </section>
 
-    <div class="queue-actions"><button id="btn-duplicate" class="btn ghost" type="button">사본 만들기</button><button id="btn-add" class="btn primary grow" type="button">출력 목록에 추가</button></div>
+    <section id="pipe-options" class="builder-card">
+      <div class="step-head"><span class="step-no">02</span><div><strong>배관 규격과 부착 방식</strong><small>20A와 100A가 같은 크기로 나오지 않도록 규격에 연동합니다.</small></div></div>
+      <div class="field-row two">
+        <label class="field"><span>제품군</span><select id="pipe-family"></select></label>
+        <label class="field"><span>규격</span><select id="pipe-spec"></select></label>
+      </div>
+      <label class="field"><span>유체 / 용도</span><select id="pipe-purpose"></select></label>
+      <div class="field-row two">
+        <label class="field"><span>크기 기준</span><select id="pipe-size-mode"></select></label>
+        <label class="field"><span>부착 범위</span><select id="wrap-mode"></select></label>
+      </div>
+      <div id="pipe-size-summary" class="smart-summary"></div>
+    </section>
+
+    <section id="sign-options" class="builder-card" hidden>
+      <div class="step-head"><span class="step-no">02</span><div><strong>표지를 어디에서 볼까요?</strong><small>사용 거리를 기준으로 시작 크기를 정합니다.</small></div></div>
+      <label class="field"><span>사용 범위</span><select id="sign-size-profile"></select></label>
+      <div id="sign-size-summary" class="smart-summary"></div>
+    </section>
+
+    <section class="builder-card">
+      <div class="step-head"><span class="step-no">03</span><div><strong>문구와 줄 구성</strong><small>짧으면 한 줄, 길면 두 줄로 자동 정리할 수 있습니다.</small></div></div>
+      <div id="line-mode" class="segmented" role="group" aria-label="문구 줄 구성">
+        <button type="button" data-line="auto">자동</button><button type="button" data-line="one">1줄</button><button type="button" data-line="two">2줄</button>
+      </div>
+      <label class="field"><span>큰 문구</span><textarea id="main-text" rows="2" maxlength="120" placeholder="예: 냉각수"></textarea></label>
+      <label class="field"><span>보조 문구</span><input id="sub-text" type="text" maxlength="120" placeholder="예: COOLING WATER"></label>
+      <label id="show-spec-row" class="toggle-row"><span><b>배관 규격 함께 표시</b><small>예: VP 20 · Ø26 mm</small></span><input id="show-spec" type="checkbox" checked></label>
+      <div class="field-row two"><label class="field"><span>수량</span><input id="quantity" type="number" min="1" max="999" value="1"></label><label class="field"><span>흐름 방향</span><select id="pipe-direction"><option value="right">오른쪽 →</option><option value="left">← 왼쪽</option><option value="both">↔ 양방향</option><option value="none">화살표 없음</option></select></label></div>
+    </section>
+
+    <section class="builder-card design-section">
+      <div class="step-head"><span class="step-no">04</span><div><strong>디자인을 보고 고르세요</strong><small>이름이 아니라 실제 모양을 비교합니다.</small></div><button id="btn-design-all" class="mini-link" type="button">전체 보기</button></div>
+      <div id="design-strip" class="design-strip"></div>
+    </section>
+
+    <div class="builder-actions">
+      <button id="btn-direct-edit" class="btn edit" type="button"><span>✥</span> 화면에서 직접 편집</button>
+      <button id="btn-advanced" class="btn ghost" type="button">세부 설정</button>
+      <button id="btn-add" class="btn primary grow" type="button">+ 출력 목록에 추가</button>
+    </div>
   </aside>
 
-  <section class="workspace">
-    <div class="workspace-toolbar noprint">
-      <div><strong id="current-title">용수 배관</strong><span id="current-meta"></span></div>
-      <div class="workspace-actions"><button id="btn-custom-edit-top" class="direct-edit-top" type="button">직접 편집</button><div class="view-tabs"><button class="active" type="button" data-view="edit">편집</button><button type="button" data-view="sheet">출력 용지</button></div></div>
+  <section class="studio-area">
+    <div class="studio-toolbar noprint">
+      <div class="current-label"><span id="current-kind-badge">PIPE</span><div><strong id="current-title">냉각수 배관</strong><small id="current-meta">VP 20 · 80 × 25 mm</small></div></div>
+      <div class="studio-switch"><button class="active" type="button" data-view="edit">현재 라벨</button><button type="button" data-view="sheet">출력 용지</button></div>
+      <div id="edit-status" class="edit-status" hidden><i></i> 직접 편집 중 · 객체를 클릭하세요</div>
     </div>
 
     <div id="edit-view" class="edit-view">
-      <div class="canvas-wrap">
-        <div class="canvas-hint noprint"><b>LIVE EDITOR</b><span id="canvas-hint-text">기본값 그대로 출력하거나, 직접 편집을 열어 객체를 드래그하세요.</span></div>
-        <div id="label-stage" class="label-stage" aria-label="라벨 편집 미리보기"></div>
-        <div id="drag-help" class="drag-help noprint" hidden>선택한 객체를 드래그해 이동 · 모서리 점으로 크기조절 · 위쪽 점으로 회전 · 글자를 더블클릭하면 바로 수정</div>
+      <div class="canvas-card">
+        <div class="canvas-top noprint"><div><span>LIVE CANVAS</span><strong id="canvas-size-label">80 × 25 mm</strong></div><p id="canvas-hint">기본값 그대로 바로 출력할 수 있습니다.</p></div>
+        <div class="canvas-space" id="canvas-space">
+          <div id="label-stage" class="label-stage" aria-label="라벨 편집 미리보기"></div>
+          <div id="snap-h" class="snap-line horizontal" hidden></div><div id="snap-v" class="snap-line vertical" hidden></div>
+        </div>
+        <div id="edit-toolbar" class="edit-toolbar noprint" hidden>
+          <button type="button" data-edit-action="center-x" title="가로 가운데">↔ 가운데</button>
+          <button type="button" data-edit-action="center-y" title="세로 가운데">↕ 가운데</button>
+          <button type="button" data-edit-action="front">앞으로</button>
+          <button type="button" data-edit-action="back">뒤로</button>
+          <button type="button" data-edit-action="delete" class="danger">삭제</button>
+          <span class="toolbar-help">더블클릭: 글자 바로 수정 · 모서리: 크기 · 위 핸들: 회전</span>
+        </div>
       </div>
-      <aside class="queue-panel noprint">
-        <div class="queue-head"><div><span>PRINT QUEUE</span><strong>출력 목록 <em id="queue-count">0</em></strong></div><button id="btn-clear" type="button">전체 삭제</button></div>
-        <div id="queue-list" class="queue-list"></div>
+
+      <aside class="right-panel noprint">
+        <div class="right-tabs"><button class="active" type="button" data-right-tab="queue">출력 목록 <b id="queue-count">0</b></button><button type="button" data-right-tab="inspector">선택 객체</button></div>
+        <div id="queue-tab" class="right-content active">
+          <div id="queue-list" class="queue-list"></div>
+          <button id="btn-clear" class="text-danger" type="button">출력 목록 전체 삭제</button>
+        </div>
+        <div id="inspector-tab" class="right-content">
+          <div id="inspector-empty" class="empty-state"><strong>편집할 객체를 선택하세요.</strong><span>‘화면에서 직접 편집’을 켠 뒤 글자나 SVG를 클릭합니다.</span></div>
+          <div id="object-inspector" hidden>
+            <div class="inspector-title"><span id="inspector-type">TEXT</span><strong id="inspector-name">큰 문구</strong></div>
+            <div id="text-tools" class="tool-block" hidden>
+              <label class="field"><span>문구</span><textarea id="obj-text" rows="2"></textarea></label>
+              <div class="field-row two"><label class="field"><span>글자 크기</span><input id="obj-font" type="range" min="8" max="90" value="40"></label><label class="field"><span>굵기</span><select id="obj-weight"><option value="500">보통</option><option value="700">굵게</option><option value="800">매우 굵게</option><option value="900">최대</option></select></label></div>
+              <div class="field-row two"><label class="field"><span>글꼴</span><select id="obj-font-family"><option value="sans">고딕 / Sans</option><option value="condensed">좁은 고딕</option><option value="serif">명조 / Serif</option><option value="mono">고정폭 / Mono</option></select></label><label class="field color"><span>글자 색</span><input id="obj-color" type="color"></label></div>
+              <div class="segmented compact" id="obj-align"><button type="button" data-align="left">왼쪽</button><button type="button" data-align="center">가운데</button><button type="button" data-align="right">오른쪽</button></div>
+              <div class="field-row two"><label class="field"><span>자간</span><input id="obj-spacing" type="range" min="-10" max="30" value="0"></label><label class="field"><span>줄간격</span><input id="obj-lineheight" type="range" min="80" max="160" value="105"></label></div>
+            </div>
+            <div id="icon-tools" class="tool-block" hidden>
+              <label class="field"><span>SVG 아이콘</span><select id="icon-select"></select></label>
+              <label class="field color"><span>아이콘 색</span><input id="icon-color" type="color"></label>
+              <div class="icon-actions"><button id="btn-svg-upload" class="btn ghost" type="button">+ SVG 파일</button><input id="svg-file" type="file" accept=".svg,image/svg+xml" hidden><button id="btn-icon-library" class="btn ghost" type="button">아이콘 보기</button></div>
+            </div>
+            <details class="precision-tools"><summary>정밀 수치 조정</summary><div class="field-row two"><label class="field"><span>X %</span><input id="obj-x" type="number" step="0.5"></label><label class="field"><span>Y %</span><input id="obj-y" type="number" step="0.5"></label></div><div class="field-row two"><label class="field"><span>너비 %</span><input id="obj-w" type="number" step="0.5"></label><label class="field"><span>높이 %</span><input id="obj-h" type="number" step="0.5"></label></div><label class="field"><span>회전 °</span><input id="obj-rotate" type="number" step="1"></label></details>
+          </div>
+        </div>
       </aside>
     </div>
 
     <div id="sheet-view" class="sheet-view" hidden>
-      <div class="sheet-toolbar noprint">
-        <label>용지 <select id="paper-size"><option value="A4">A4</option><option value="A3">A3</option></select></label>
-        <label>방향 <select id="paper-orientation"><option value="auto">자동 최적화</option><option value="portrait">세로</option><option value="landscape">가로</option></select></label>
-        <label>간격 <select id="paper-gap"><option value="3">3 mm</option><option value="4" selected>4 mm</option><option value="6">6 mm</option><option value="8">8 mm</option></select></label>
-        <div id="sheet-plan" class="sheet-plan"></div>
-      </div>
+      <div class="sheet-toolbar noprint"><label>용지 <select id="paper-size"><option value="A4">A4</option><option value="A3">A3</option></select></label><label>방향 <select id="paper-orientation"><option value="auto">자동 최적화</option><option value="portrait">세로</option><option value="landscape">가로</option></select></label><label>간격 <select id="paper-gap"><option value="3">3 mm</option><option value="4" selected>4 mm</option><option value="6">6 mm</option><option value="8">8 mm</option></select></label><div id="sheet-plan" class="sheet-plan"></div></div>
       <div id="paper-preview" class="paper-preview"></div>
     </div>
   </section>
 </main>
 
+<div id="advanced-drawer" class="drawer noprint" aria-hidden="true">
+  <button class="drawer-backdrop" data-close-drawer aria-label="세부 설정 닫기"></button>
+  <aside class="drawer-panel">
+    <div class="drawer-head"><div><span class="eyebrow">DETAIL SETTINGS</span><h2>세부 설정</h2><p>기본값에서 필요한 부분만 바꾸세요.</p></div><button class="close-x" data-close-drawer type="button">×</button></div>
+    <section class="drawer-section"><h3>실제 크기</h3><div class="field-row two"><label class="field"><span>가로 W (mm)</span><input id="label-width" type="number" min="20" step="1"></label><label class="field"><span>세로 H (mm)</span><input id="label-height" type="number" min="10" step="1"></label></div><button id="btn-reapply-smart" class="text-button" type="button">규격 기준 자동 크기로 되돌리기</button></section>
+    <section class="drawer-section"><h3>색상과 테두리</h3><div class="color-grid"><label><span>배경</span><input id="fill-color" type="color"></label><label><span>강조</span><input id="accent-color" type="color"></label><label><span>글자</span><input id="text-color" type="color"></label></div><div class="field-row two"><label class="field"><span>테두리 두께</span><input id="border-width" type="number" min="0" max="5" step="0.25"></label><label class="field"><span>모서리</span><select id="corner-style"><option value="square">각진</option><option value="soft">약간 둥글게</option><option value="round">둥글게</option></select></label></div></section>
+    <section class="drawer-section"><h3>배관 표시 옵션</h3><label class="toggle-row"><span><b>아이콘 표시</b><small>필요 없으면 숨길 수 있습니다.</small></span><input id="show-icon" type="checkbox" checked></label><label class="toggle-row"><span><b>영문 보조문구</b><small>한글 아래 작은 줄</small></span><input id="show-sub" type="checkbox" checked></label><label class="toggle-row"><span><b>규격 / 외경 표시</b><small>VP 20 · Ø26 mm</small></span><input id="show-spec-advanced" type="checkbox" checked></label></section>
+    <section class="drawer-section"><h3>배치</h3><button id="btn-reset-layout" class="btn ghost full" type="button">현재 디자인 기본 배치로 초기화</button></section>
+  </aside>
+</div>
+
 <div id="toast-region" class="toast-region" aria-live="polite"></div>
 
-<dialog id="projects-dialog"><form method="dialog" class="dialog-card"><div class="dialog-head"><strong>현장 저장 / 불러오기</strong><button>×</button></div><label class="field"><span>저장 이름</span><input id="project-save-name" type="text"></label><button id="btn-project-save-as" type="button" class="btn primary full">현재 상태 저장</button><div id="project-list" class="project-list"></div></form></dialog>
+<dialog id="design-dialog" class="wide-dialog"><div class="dialog-card"><div class="dialog-head"><div><span class="eyebrow">DESIGN GALLERY</span><h2>라벨 디자인</h2><p>실제 모양을 보고 선택하세요. 선택 후에도 글자/SVG를 직접 움직일 수 있습니다.</p></div><button data-close-dialog="design-dialog" class="close-x" type="button">×</button></div><div id="design-gallery" class="design-gallery"></div></div></dialog>
+<dialog id="template-dialog" class="wide-dialog"><div class="dialog-card"><div class="dialog-head"><div><span class="eyebrow">TEMPLATE LIBRARY</span><h2 id="template-dialog-title">템플릿 라이브러리</h2><p>선택하면 기본 문구·아이콘·색상·디자인이 바로 적용됩니다.</p></div><button data-close-dialog="template-dialog" class="close-x" type="button">×</button></div><div id="template-dialog-grid" class="template-dialog-grid"></div></div></dialog>
+<dialog id="theme-dialog"><div class="dialog-card"><div class="dialog-head"><div><span class="eyebrow">WORKSPACE STYLE</span><h2>화면 디자인</h2><p>작업 화면만 바뀌며 출력 라벨 색상에는 영향이 없습니다.</p></div><button data-close-dialog="theme-dialog" class="close-x" type="button">×</button></div><div id="theme-gallery" class="theme-gallery"></div></div></dialog>
+<dialog id="icons-dialog" class="wide-dialog"><div class="dialog-card"><div class="dialog-head"><div><span class="eyebrow">SVG LIBRARY</span><h2>SVG 아이콘</h2><p>아이콘을 선택하거나 파일을 추가한 뒤 캔버스에서 직접 이동·크기조절·회전하세요.</p></div><button data-close-dialog="icons-dialog" class="close-x" type="button">×</button></div><div id="icon-gallery" class="icon-gallery"></div></div></dialog>
+<dialog id="projects-dialog"><div class="dialog-card"><div class="dialog-head"><div><span class="eyebrow">LOCAL PROJECTS</span><h2>현장 저장 / 불러오기</h2></div><button data-close-dialog="projects-dialog" class="close-x" type="button">×</button></div><label class="field"><span>저장 이름</span><input id="project-save-name" type="text"></label><button id="btn-project-save-as" type="button" class="btn primary full">현재 상태 저장</button><div id="project-list" class="project-list"></div></div></dialog>
 
 <script src="./data/catalog.js"></script>
+<script src="./data/icons.js"></script>
 <script src="./app.js"></script>
 </body>
 </html>
-
 
