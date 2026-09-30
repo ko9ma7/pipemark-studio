@@ -188,14 +188,20 @@
     {id:'button',group:'sign',name:'버튼 표지',desc:'비상정지·조작부'}
   ];
 
-  const uiThemes = [
-    {id:'studio',name:'Studio',desc:'밝고 정돈된 제작 도구',swatches:['#F4F7F9','#FFFFFF','#143B57','#1D8C6B']},
-    {id:'blueprint',name:'Blueprint',desc:'도면·엔지니어링 감성',swatches:['#102536','#173A54','#B8D8F0','#43B5E6']},
-    {id:'workshop',name:'Workshop',desc:'현장 공구함 느낌의 고대비',swatches:['#F6F1E6','#FFF9EE','#2B2E31','#E6A219']},
-    {id:'soft',name:'Soft',desc:'부드러운 카드형 인터페이스',swatches:['#F4FAF7','#FFFFFF','#315A4A','#8BC7AF']},
-    {id:'mono',name:'Mono',desc:'색을 절제한 명확한 도구',swatches:['#F4F4F4','#FFFFFF','#171717','#6B7280']},
-    {id:'dark',name:'Dark Control',desc:'어두운 제어실 스타일',swatches:['#0F171D','#17242D','#DDE8EF','#33C18A']}
+  const stylePacks = [
+    {id:'spectrum',name:'Spectrum Studio',source:'Adobe Spectrum',desc:'전문 제작 도구형 · 촘촘하지만 읽기 쉬운 편집 UI',ui:'spectrum',label:{skin:'spectrum',font:'sans',weight:800,corner:'soft',border:0.8,tip:24,shaft:12,shadow:'soft'}},
+    {id:'fluent',name:'Fluent Workshop',source:'Fluent 2',desc:'차분한 계층 · 둥근 컨트롤 · 은은한 깊이',ui:'fluent',label:{skin:'fluent',font:'sans',weight:800,corner:'soft',border:0.7,tip:25,shaft:10,shadow:'soft'}},
+    {id:'swiss',name:'Swiss Precision',source:'Minimalism & Swiss Style',desc:'격자 · 강한 위계 · 불필요한 장식 없는 정밀형',ui:'swiss',label:{skin:'swiss',font:'condensed',weight:900,corner:'square',border:1.0,tip:28,shaft:9,shadow:'none'}},
+    {id:'glass',name:'Glass Lab',source:'Glassmorphism',desc:'반투명 패널 · 레이어 깊이 · 현대적 제작 화면',ui:'glass',label:{skin:'glass',font:'sans',weight:800,corner:'round',border:0.6,tip:23,shaft:12,shadow:'soft'}},
+    {id:'soft',name:'Soft Tool',source:'Neumorphism / Soft UI',desc:'부드러운 입체감 · 큰 조작부 · 편안한 작업 화면',ui:'soft',label:{skin:'soft',font:'sans',weight:800,corner:'round',border:0.6,tip:22,shaft:12,shadow:'soft'}},
+    {id:'brutal',name:'Industrial Brutal',source:'Brutalism',desc:'굵은 선 · 강한 대비 · 현장 표지에 어울리는 거친 인상',ui:'brutal',label:{skin:'brutal',font:'condensed',weight:900,corner:'square',border:1.4,tip:30,shaft:8,shadow:'hard'}},
+    {id:'dark',name:'Dark Control',source:'Dark Mode (OLED)',desc:'저조도 제어실 · 높은 대비 · 네온 포커스',ui:'dark',label:{skin:'dark',font:'sans',weight:800,corner:'soft',border:0.8,tip:25,shaft:11,shadow:'soft'}},
+    {id:'blueprint',name:'Blueprint Tech',source:'Data-Dense / Technical',desc:'도면 감성 · 얇은 선 · 기술 명판과 설비 표시에 적합',ui:'blueprint',label:{skin:'blueprint',font:'mono',weight:700,corner:'square',border:0.7,tip:26,shaft:10,shadow:'none'}}
   ];
 
-  window.PM_CATALOG = {version:5,pipeFamilies,pipePurposes,categories,templates,tones,signSizeProfiles,pipeSizingModes,wrapModes,designPresets,uiThemes};
+  const uiThemes = stylePacks.map(p=>({id:p.id,name:p.name,desc:p.desc,source:p.source,ui:p.ui,label:p.label,swatches:({
+    spectrum:['#F4F5F7','#FFFFFF','#1473E6','#2D2D2D'],fluent:['#F5F5F5','#FFFFFF','#0F6CBD','#242424'],swiss:['#F7F7F5','#FFFFFF','#111111','#E21D2F'],glass:['#E9F1F7','#FFFFFFAA','#315B9B','#50C5B7'],soft:['#E7ECF2','#E7ECF2','#526B8A','#7C6FE8'],brutal:['#FFF7DA','#FFFFFF','#111111','#FFB000'],dark:['#0B0F12','#151A1E','#E7EEF3','#37D99B'],blueprint:['#0B2740','#103856','#D9F2FF','#42C8F5']
+  })[p.id]}));
+
+  window.PM_CATALOG = {version:6,pipeFamilies,pipePurposes,categories,templates,tones,signSizeProfiles,pipeSizingModes,wrapModes,designPresets,uiThemes,stylePacks};
 })();

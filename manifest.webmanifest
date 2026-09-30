@@ -1,7 +1,7 @@
 ﻿{
   "name":"PipeMark Studio",
   "short_name":"PipeMark",
-  "description":"배관 마커·안전표지·설비·물류·자산 라벨을 빠르게 만들고 직접 편집하는 산업용 라벨 제작기",
+  "description":"배관 마커·안전표지·설비 라벨을 템플릿으로 빠르게 만들고 글자·SVG·그룹·화살표를 직접 편집하는 로컬 우선 산업용 라벨 스튜디오",
   "start_url":"./",
   "scope":"./",
   "display":"standalone",
